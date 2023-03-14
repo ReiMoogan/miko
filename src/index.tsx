@@ -9,13 +9,12 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 
-// let uri: string;
-// if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-//     uri = "https://localhost:38559/v2/graphql/";
-// } else {
-//     uri = "https://bobcatcourses.williamle.com/v2/graphql/";
-// }
-const uri = "https://bobcatcourses.williamle.com/v2/graphql/";
+let uri: string;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    uri = "https://localhost:38559/v2/graphql/";
+} else {
+    uri = "https://bobcatcourses.williamle.com/v2/graphql/";
+}
 
 const client = new ApolloClient({
     uri: uri,

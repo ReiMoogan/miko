@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { useQuery, gql } from '@apollo/client';
 import { QueryPage, Class } from './GraphQLModels';
 
 const GET_CLASSES = gql`
-    query {
-        classes(term: 202230) {
+    query($cursor: String) {
+        classes(term: 202230, first: 500, after: $cursor, order: [{courseNumber: ASC}]) {
             totalCount
             pageInfo {
                 hasNextPage
@@ -15,36 +14,50 @@ const GET_CLASSES = gql`
             nodes {
                 id
                 courseReferenceNumber
-                courseNumber
                 courseTitle
+                courseNumber
+                creditHours
             }
         }
     }
 `;
+const DisplayCourses: Function = (): JSX.Element[] => {
+    const { loading, error, data } = useQuery(GET_CLASSES, {
+        variables: { cursor: null }
+    });
 
-function DisplayLocations() {
-    const { loading, error, data } = useQuery(GET_CLASSES);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error : {error.message}</p>;
+    if (loading) return [<p key="load">Now loading, please wait warmly...</p>];
+    if (error) return [<p key="error">Error~ {error.message}</p>];
     let typedData: QueryPage<Class> = data.classes;
 
     return typedData.nodes.map((item: Class) => (
-        <div key={item.id}>
-            <h3>{item.courseNumber}</h3>
-            <br />
-            <p>{item.courseTitle}</p>
-            <br />
-        </div>
+        <tr key={item.id.toString()}>
+            <td>{item.courseReferenceNumber}</td>
+            <td>{item.courseTitle}</td>
+            <td>{item.courseNumber}</td>
+            <td>{item.creditHours}</td>
+            <td>{item.courseReferenceNumber}</td>
+        </tr>
     ));
 }
 
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-
-            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>CRN</th>
+                        <th>Course Title</th>
+                        <th>Course Number</th>
+                        <th>Course Name</th>
+                        <th>Units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <DisplayCourses />
+                </tbody>
+            </table>
         </div>
     );
 }

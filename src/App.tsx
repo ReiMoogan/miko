@@ -5,7 +5,7 @@ import { QueryPage, Class } from './GraphQLModels';
 
 const GET_CLASSES = gql`
     query($cursor: String) {
-        classes(term: 202230, first: 500, after: $cursor, order: [{courseNumber: ASC}]) {
+        classes(term: 202230, first: 5000, after: $cursor, order: [{courseNumber: ASC}]) {
             totalCount
             pageInfo {
                 hasNextPage
@@ -21,31 +21,62 @@ const GET_CLASSES = gql`
         }
     }
 `;
-const DisplayCourses: Function = (): JSX.Element[] => {
+
+const SUBJECTS = new Map<string, string>([["loading", "Loading..."], ["error", "Error!"]]);
+
+const DisplayCourses: Function = (): Map<string, JSX.Element[]> => {
     const { loading, error, data } = useQuery(GET_CLASSES, {
         variables: { cursor: null }
     });
 
-    if (loading) return [<p key="load">Now loading, please wait warmly...</p>];
-    if (error) return [<p key="error">Error~ {error.message}</p>];
+    const map = new Map<string, JSX.Element[]>();
+
+    if (loading) {
+        map.set("loading", [<tr key="load"><td colSpan={100}>Now loading, please wait warmly...</td></tr>]);
+        return map;
+    }
+
+    if (error){
+        map.set("error", [<tr key="error"><td colSpan={100}>Error~ {error.message}</td></tr>]);
+        return map;
+    }
+
     let typedData: QueryPage<Class> = data.classes;
 
-    return typedData.nodes.map((item: Class) => (
-        <tr key={item.id.toString()}>
-            <td>{item.courseReferenceNumber}</td>
-            <td>{item.courseTitle}</td>
-            <td>{item.courseNumber}</td>
-            <td>{item.creditHours}</td>
-            <td>{item.courseReferenceNumber}</td>
-        </tr>
-    ));
+    for (const item of typedData.nodes) {
+        const row = (
+            <tr key={item.id.toString()}>
+                <td>{item.courseReferenceNumber}</td>
+                <td>{item.courseTitle}</td>
+                <td>{item.courseNumber}</td>
+                <td>{item.creditHours}</td>
+                <td>{item.courseReferenceNumber}</td>
+            </tr>
+        );
+
+        const subject = item.courseNumber.split('-')[0];
+
+        if (map.has(subject)) {
+            map.get(subject)?.push(row);
+        } else {
+            map.set(subject, [row]);
+        }
+    }
+
+    return map;
 }
 
-function App() {
-    return (
-        <div className="App">
-            <table>
-                <thead>
+const DisplayGroups: Function = (): JSX.Element[] => {
+    const courses = DisplayCourses();
+
+    const output: JSX.Element[] = [];
+
+    for (const [key, value] of courses) {
+        const group = (
+            <div key={key}>
+                <h1>{key}</h1>
+                <table>
+                    <thead>
                     <tr>
                         <th>CRN</th>
                         <th>Course Title</th>
@@ -53,11 +84,24 @@ function App() {
                         <th>Course Name</th>
                         <th>Units</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <DisplayCourses />
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {value}
+                    </tbody>
+                </table>
+            </div>
+        );
+
+        output.push(group);
+    }
+
+    return output;
+}
+
+function App() {
+    return (
+        <div className="App">
+            <DisplayGroups />
         </div>
     );
 }

@@ -56,6 +56,6 @@
     ],
     "theme_color": "#da532c",
     "background_color": "#ffffff",
-    "start_url": "https://bobcatcourses.ucmerced.edu",
+    "start_url": ".",
     "display": "standalone"
 }

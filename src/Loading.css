@@ -1,0 +1,20 @@
+.loading-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    perspective: 69420px; /* haha funny number */
+
+    font-size: 16pt;
+}
+
+@keyframes spin {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
+}
+
+.loading-group img {
+    transform: rotateY(360deg);
+    animation: spin 1s linear infinite;
+    height: 20pt;
+    margin-right: 5px;
+}

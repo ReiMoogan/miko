@@ -69,4 +69,26 @@ interface Professor {
     classes?: Faculty[]
 }
 
-export type { PageInfo, QueryPage, Class, LinkedSection, Meeting, Faculty }
+interface MeetingType {
+    id: number,
+    name: string,
+    type: string
+}
+
+interface Stats {
+    totalProfessors: number,
+    totalMeetings: number,
+    totalClasses: number
+}
+
+interface LastUpdated {
+    tableName: string,
+    lastUpdate: string
+}
+
+interface Subject {
+    name: string,
+    subject1: string
+}
+
+export type { PageInfo, QueryPage, Class, LinkedSection, Meeting, Faculty, MeetingType, Professor, Stats, LastUpdated, Subject }

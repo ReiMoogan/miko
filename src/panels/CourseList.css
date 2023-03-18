@@ -1,0 +1,29 @@
+.class-group {
+    font-size: 10pt;
+    width: 100%;
+}
+
+.class-table {
+    overflow-x: scroll;
+}
+
+.class-group table {
+    white-space: nowrap;
+    border-collapse: collapse;
+}
+
+.class-group th, td {
+    padding: 0 10px 0 0;
+}
+
+.class-group thead tr {
+    background-color: #dcdcdc;
+}
+
+.class-group tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    
+}

@@ -8,6 +8,8 @@ nav {
     background-color: #002856;
     padding: 10px;
     overflow: hidden;
+
+    vertical-align: center;
 }
 
 nav > * {
@@ -34,6 +36,10 @@ nav button:hover {
     color: white;
 }
 
+.nav-link.nav-selected {
+    color: white;
+}
+
 nav img {
     height: 30px;
     margin-right: 5px;
@@ -45,4 +51,14 @@ nav img {
 
 .nav-link {
     color: #979797;
+}
+
+.nav-search {
+    border: none;
+    border-radius: 10px;
+    height: 18pt;
+    padding: 2pt 5pt;
+    margin-top: 2pt; /* feels off? */
+
+    flex-grow: 1;
 }

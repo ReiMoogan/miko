@@ -3,7 +3,7 @@ import {QueryPage, Class, Stats, MeetingType, LastUpdated, Meeting, LinkedSectio
 import './CourseList.css'
 import { useState } from 'react';
 import {formatDays, formatTime} from '../Utilities';
-import Loading from '../Loading';
+import Loading from '../components/Loading';
 
 const GET_CLASSES = gql`
     query($cursor: String) {
@@ -143,7 +143,6 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
 
     let classes: QueryPage<Class> = data.classes;
 
-    console.log(state);
     for (const item of classes.nodes) {
         const meetings = [...item.meetings];
         meetings.sort((a, b) => a.meetingType - b.meetingType);
@@ -159,7 +158,6 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
                 <td>{item.courseTitle}</td>
                 <td>{item.courseNumber}</td>
                 <td>{item.creditHours}</td>
-                <td>{item.courseReferenceNumber}</td>
                 <td>{state.meetingTypes.get(mainMeeting.meetingType)?.name}</td>
                 <td>{mainMeeting.beginDate} - {mainMeeting.endDate}</td>
                 <td>{formatDays(mainMeeting.inSession)}</td>
@@ -211,7 +209,6 @@ const DisplayGroups: Function = (): JSX.Element[] => {
                             <th>CRN</th>
                             <th>Course Title</th>
                             <th>Course Number</th>
-                            <th>Course Name</th>
                             <th>Units</th>
                             <th>Type</th>
                             <th>Days</th>

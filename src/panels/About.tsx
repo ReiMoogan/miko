@@ -3,7 +3,7 @@ import {gql, useQuery} from "@apollo/client";
 import Loading from "../components/Loading";
 
 const GET_STATS = gql`
-    query($cursor: String) {
+    query {
         terms
         stats {
             totalProfessors
@@ -31,21 +31,21 @@ const About: Function = (): JSX.Element => {
     let lines: JSX.Element[];
 
     if (loading) {
-        lines = [<li><Loading /></li>];
+        lines = [<li key={"loading"}><Loading /></li>];
     } else if (error){
-        lines = [<li>Error~ {error.message}</li>]
+        lines = [<li key={"error"}>Error~ {error.message}</li>]
     } else {
         lines = [
-            <li>Total Terms: {data.terms.length}</li>,
-            <li>Total Professors: {data.stats.totalProfessors}</li>,
-            <li>Total Meetings: {data.stats.totalMeetings}</li>,
-            <li>Total Classes: {data.stats.totalClasses}</li>,
-            <li>Total Subjects: {data.subjects.length}</li>,
-            <li>Total Meeting Types: {data.meetingTypes.length}</li>
+            <li key={"totalTerms"}>Total Terms: {data.terms.length}</li>,
+            <li key={"totalProfessors"}>Total Professors: {data.stats.totalProfessors}</li>,
+            <li key={"totalMeetings"}>Total Meetings: {data.stats.totalMeetings}</li>,
+            <li key={"totalClasses"}>Total Classes: {data.stats.totalClasses}</li>,
+            <li key={"totalSubjects"}>Total Subjects: {data.subjects.length}</li>,
+            <li key={"totalMeetingTypes"}>Total Meeting Types: {data.meetingTypes.length}</li>
         ];
 
         for (const item of data.lastUpdate) {
-            lines.push(<li>Last table update: {item.tableName} - {new Date(item.lastUpdate).toLocaleString()}</li>);
+            lines.push(<li key={"lastUpdate" + item.tableName}>Last table update: {item.tableName} - {new Date(item.lastUpdate).toLocaleString()}</li>);
         }
     }
 

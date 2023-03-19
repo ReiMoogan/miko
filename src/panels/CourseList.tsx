@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
-import {QueryPage, Class, Stats, MeetingType, LastUpdated, Meeting, LinkedSection} from '../GraphQLModels';
+import {QueryPage, Class, MeetingType, Meeting, LinkedSection} from '../GraphQLModels';
 import './CourseList.css'
 import { useState } from 'react';
 import {formatDays, formatTime} from '../Utilities';
@@ -8,15 +8,6 @@ import Loading from '../components/Loading';
 const GET_CLASSES = gql`
     query($cursor: String) {
         terms
-        stats {
-            totalProfessors
-            totalMeetings
-            totalClasses
-        }
-        lastUpdate {
-            tableName
-            lastUpdate
-        }
         subjects {
             name
             subject1
@@ -67,8 +58,6 @@ const GET_CLASSES = gql`
 class CourseDisplayState {
     courses: Map<number, Class> = new Map<number, Class>();
     terms: number[] = [];
-    stats: Stats = { totalProfessors: -1, totalMeetings: -1, totalClasses: -1 };
-    lastUpdate: LastUpdated[] = [];
     meetingTypes: Map<number, MeetingType> = new Map<number, MeetingType>();
     subjects: Map<string, string> = new Map<string, string>([["loading", "Loading..."], ["error", "Error!"]]);
 }
@@ -110,16 +99,6 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
 
     if (state.terms.length === 0) {
         state.terms = data.terms;
-        update = true;
-    }
-
-    if (state.stats.totalClasses < 0) {
-        state.stats = data.stats;
-        update = true;
-    }
-
-    if (state.lastUpdate.length === 0) {
-        state.lastUpdate = data.lastUpdate;
         update = true;
     }
 

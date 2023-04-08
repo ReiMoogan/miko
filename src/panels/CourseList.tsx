@@ -125,9 +125,13 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
     for (const item of classes.nodes) {
         const meetings = [...item.meetings];
         meetings.sort((a, b) => a.meetingType - b.meetingType);
-        const mainMeeting = meetings[0];
+        const mainMeeting = meetings[0] || {
+            beginDate: null, beginTime: null, building: null,
+            endDate: null, endTime: null, inSession: null, meetingType: null, room: null
+        };
+
         let secondaryMeeting: Meeting | null = meetings[meetings.length - 1];
-        if (mainMeeting.meetingType === secondaryMeeting.meetingType) {
+        if (secondaryMeeting && mainMeeting.meetingType === secondaryMeeting.meetingType) {
             secondaryMeeting = null;
         }
 

@@ -170,7 +170,7 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
     return map;
 }
 
-const DisplayGroups: Function = (): JSX.Element[] => {
+const Classes: Function = (): JSX.Element[] => {
     const [state, setState] = useState(new CourseDisplayState());
 
     const courses = DisplayCourses(state, setState);
@@ -223,4 +223,4 @@ const DisplayGroups: Function = (): JSX.Element[] => {
     return output;
 }
 
-export { DisplayGroups };
+export default Classes;

@@ -22,7 +22,7 @@ const Navbar: Function = (props: NavbarProps): JSX.Element => {
             <button className="nav-link" name="scheduler" onClick={(e) => { updateNavbar(e.currentTarget.name); props.clickCallback(e.currentTarget.name)} }>Scheduler</button>
             <button className="nav-link" name="history" onClick={(e) => { updateNavbar(e.currentTarget.name); props.clickCallback(e.currentTarget.name)} }>History</button>
             <button className="nav-link" name="about" onClick={(e) => { updateNavbar(e.currentTarget.name); props.clickCallback(e.currentTarget.name)} }>About</button>
-            <input type={"text"} placeholder={"Search..."} className={"nav-search"} onChange={(e) => props.searchCallback(e.target.value)} />
+            <input type={"text"} placeholder={"Search on current panel..."} className={"nav-search"} onChange={(e) => props.searchCallback(e.target.value)} />
         </nav>
     );
 }

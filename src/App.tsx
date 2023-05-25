@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
-import { DisplayGroups } from './panels/CourseList';
+import Classes from './panels/CourseList';
+import Professors from './panels/Professors';
 import Navbar from './components/Navbar';
 import About from "./panels/About";
 import { useState } from "react";
 
 const PAGES = new Map<string, JSX.Element>();
-PAGES.set("main", <DisplayGroups />);
-PAGES.set("classes", <DisplayGroups />);
+PAGES.set("classes", <Classes />);
+PAGES.set("professors", <Professors />);
 PAGES.set("about", <About />);
 
 let render: (value: (((prevState: string) => string) | string)) => void = () => {};

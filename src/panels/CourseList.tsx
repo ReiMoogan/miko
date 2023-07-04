@@ -94,7 +94,8 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
         for (const item of data.classes.nodes) {
             state.courses.set(item.id, item);
         }
-        update = true;
+        if (state.courses.size !== 0)
+            update = true;
     }
 
     if (state.terms.length === 0) {

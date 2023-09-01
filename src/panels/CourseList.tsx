@@ -4,6 +4,7 @@ import './CourseList.css'
 import { useState } from 'react';
 import {formatDays, formatTime} from '../Utilities';
 import Loading from '../components/Loading';
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
 const GET_CLASSES = gql`
     query($cursor: String) {
@@ -137,30 +138,30 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
         }
 
         const row = (
-            <tr key={item.id.toString()}>
-                <td>{item.courseReferenceNumber}</td>
-                <td>{item.courseTitle}</td>
-                <td>{item.courseNumber}</td>
-                <td>{item.creditHours}</td>
-                <td>{state.meetingTypes.get(mainMeeting.meetingType)?.name}</td>
-                <td>{mainMeeting.beginDate} - {mainMeeting.endDate}</td>
-                <td>{formatDays(mainMeeting.inSession)}</td>
-                <td>{mainMeeting.building} {mainMeeting.room}</td>
-                <td>{formatTime(mainMeeting.beginTime)} - {formatTime(mainMeeting.endTime)}</td>
-                <td>{item.faculty.map(o => o.professor?.fullName).filter(o => o != null).join(" / ")}</td>
-                <td>{item.maximumEnrollment}</td>
-                <td>{item.maximumEnrollment - item.seatsAvailable}</td>
-                <td>{item.seatsAvailable}</td>
-                <td>{item.waitCapacity ?? "N/A"}</td>
-                <td>{item.waitCapacity == null || item.waitAvailable == null ? "N/A" : (item.waitCapacity - item.waitAvailable)}</td>
-                <td>{item.waitAvailable ?? "N/A"}</td>
-                <td>{secondaryMeeting == null ? "N/A" : state.meetingTypes.get(secondaryMeeting.meetingType)?.name}</td>
-                <td>{secondaryMeeting == null ? "N/A" : secondaryMeeting.beginDate + " " + secondaryMeeting.endDate}</td>
-                <td>{secondaryMeeting == null ? "N/A" : formatDays(secondaryMeeting.inSession)}</td>
-                <td>{secondaryMeeting == null ? "N/A" : secondaryMeeting.building + " " + secondaryMeeting.room}</td>
-                <td>{secondaryMeeting == null ? "N/A" : formatTime(secondaryMeeting.beginTime) + " " + formatTime(secondaryMeeting.endTime)}</td>
-                <td><GenerateLinkedSections sections={item.linkedSections}/></td>
-            </tr>
+            <TableRow key={item.id.toString()}>
+                <TableCell>{item.courseReferenceNumber}</TableCell>
+                <TableCell>{item.courseTitle}</TableCell>
+                <TableCell>{item.courseNumber}</TableCell>
+                <TableCell>{item.creditHours}</TableCell>
+                <TableCell>{state.meetingTypes.get(mainMeeting.meetingType)?.name}</TableCell>
+                <TableCell>{mainMeeting.beginDate} - {mainMeeting.endDate}</TableCell>
+                <TableCell>{formatDays(mainMeeting.inSession)}</TableCell>
+                <TableCell>{mainMeeting.building} {mainMeeting.room}</TableCell>
+                <TableCell>{formatTime(mainMeeting.beginTime)} - {formatTime(mainMeeting.endTime)}</TableCell>
+                <TableCell>{item.faculty.map(o => o.professor?.fullName).filter(o => o != null).join(" / ")}</TableCell>
+                <TableCell>{item.maximumEnrollment}</TableCell>
+                <TableCell>{item.maximumEnrollment - item.seatsAvailable}</TableCell>
+                <TableCell>{item.seatsAvailable}</TableCell>
+                <TableCell>{item.waitCapacity ?? "N/A"}</TableCell>
+                <TableCell>{item.waitCapacity == null || item.waitAvailable == null ? "N/A" : (item.waitCapacity - item.waitAvailable)}</TableCell>
+                <TableCell>{item.waitAvailable ?? "N/A"}</TableCell>
+                <TableCell>{secondaryMeeting == null ? "N/A" : state.meetingTypes.get(secondaryMeeting.meetingType)?.name}</TableCell>
+                <TableCell>{secondaryMeeting == null ? "N/A" : secondaryMeeting.beginDate + " " + secondaryMeeting.endDate}</TableCell>
+                <TableCell>{secondaryMeeting == null ? "N/A" : formatDays(secondaryMeeting.inSession)}</TableCell>
+                <TableCell>{secondaryMeeting == null ? "N/A" : secondaryMeeting.building + " " + secondaryMeeting.room}</TableCell>
+                <TableCell>{secondaryMeeting == null ? "N/A" : formatTime(secondaryMeeting.beginTime) + " " + formatTime(secondaryMeeting.endTime)}</TableCell>
+                <TableCell><GenerateLinkedSections sections={item.linkedSections}/></TableCell>
+            </TableRow>
         );
 
         const subject = item.courseNumber.split('-')[0];
@@ -184,12 +185,12 @@ const Classes: Function = (): JSX.Element[] => {
 
     for (const [key, value] of Array.from(courses.entries())) {
         const group = (
-            <div key={key} className="class-group">
+            <Paper key={key} className="class-group" elevation={4}>
                 <h1>{state.subjects.get(key)}</h1>
-                <div className="class-table">
-                    <table>
-                        <thead>
-                        <tr>
+                <TableContainer className="class-table">
+                    <Table stickyHeader>
+                        <TableHead>
+                        <TableRow>
                             <th>CRN</th>
                             <th>Course Title</th>
                             <th>Course Number</th>
@@ -212,14 +213,14 @@ const Classes: Function = (): JSX.Element[] => {
                             <th>Final Room</th>
                             <th>Final Dates</th>
                             <th>Linked Courses</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
                         {value}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
         );
 
         output.push(group);

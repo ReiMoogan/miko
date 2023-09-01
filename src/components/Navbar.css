@@ -50,6 +50,12 @@ nav img {
     color: #daa900;
 }
 
+@media (max-width: 1060px) {
+    .nav-title-name {
+        display: none;
+    }
+}
+
 .nav-link {
     color: #979797;
 }

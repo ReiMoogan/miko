@@ -13,16 +13,12 @@ function formatTime(time: string | null | undefined) {
         return "N/A";
     }
 
-    let hour = parseInt(time.substring(0, 2));
-    const minute = time.substring(2, 4);
-    let ampm = "AM";
-    if (hour > 12) {
-        hour -= 12;
-    }
-    if (hour >= 12) {
-        ampm = "PM";
-    }
-    return `${hour}:${minute} ${ampm}`;
+    const hour = parseInt(time.substring(0, 2));
+    const minute = parseInt(time.substring(2, 4));
+    let date = new Date();
+    date.setHours(hour);
+    date.setMinutes(minute);
+    return date.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
 }
 
 function formatDays(days: number | null | undefined) {

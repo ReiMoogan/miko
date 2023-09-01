@@ -16,7 +16,7 @@ const Navbar: Function = (props: NavbarProps): JSX.Element => {
 
     return (
         <nav>
-            <button className="nav-title" onClick={() => graphQlClient.refetchQueries({ include: "all" })}><img src={"fumo.svg"} placeholder={"site logo"} alt=""/>UCM Scraper Core</button>
+            <button className="nav-title" onClick={() => graphQlClient.refetchQueries({ include: "all" })}><img src={"fumo.svg"} placeholder={"site logo"} alt=""/><span className={"nav-title-name"}>UCM Scraper Core</span></button>
             <button className="nav-link nav-selected" name="classes" onClick={(e) => { updateNavbar(e.currentTarget.name); props.clickCallback(e.currentTarget.name) } }>Classes</button>
             <button className="nav-link" name="professors" onClick={(e) => { updateNavbar(e.currentTarget.name); props.clickCallback(e.currentTarget.name)} }>Professors</button>
             <button className="nav-link" name="scheduler" onClick={(e) => { updateNavbar(e.currentTarget.name); props.clickCallback(e.currentTarget.name)} }>Scheduler</button>

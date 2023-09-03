@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {createTheme, ThemeProvider} from "@mui/material";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -21,10 +22,21 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
+const theme = createTheme({
+    typography: {
+        fontFamily: [
+            "Source Sans Pro",
+            "sans-serif"
+        ].join(","),
+    }
+})
+
 root.render(
     <React.StrictMode>
         <ApolloProvider client={client}>
-            <App />
+            <ThemeProvider theme={theme}>
+                <App />
+            </ThemeProvider>
         </ApolloProvider>
     </React.StrictMode>
 );

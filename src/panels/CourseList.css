@@ -13,7 +13,7 @@
     border-collapse: collapse;
 }
 
-.class-group th, td {
+.class-group th, td.MuiTableCell-root {
     padding: 0 10px 0 0;
 }
 
@@ -26,5 +26,14 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-    
+    margin: 0 0 5px 0;
+}
+
+.MuiPaper-root {
+    margin: 10px 0;
+    padding: 0 5px;
+}
+
+main {
+    padding: 0;
 }

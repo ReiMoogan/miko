@@ -7,7 +7,7 @@ import Loading from '../components/Loading';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
 const GET_CLASSES = gql`
-    query($cursor: String) {
+    query($term: Int!, $cursor: String) {
         terms
         subjects {
             name

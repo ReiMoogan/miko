@@ -18,7 +18,7 @@ const GET_CLASSES = gql`
             name
             type
         }
-        classes(term: 202330, first: 5000, after: $cursor, order: [{courseNumber: ASC}]) {
+        classes(term: $term, first: 5000, after: $cursor, order: [{courseNumber: ASC}]) {
             totalCount
             pageInfo {
                 hasNextPage
@@ -73,9 +73,23 @@ const GenerateLinkedSections: Function = (sections: LinkedSection[] | null | und
     return result;
 }
 
+function getCurrentTerm() {
+    const currentDate = new Date();
+    let semester = 30; // Default to Fall
+    if (currentDate.getMonth() <= 1 || currentDate.getMonth() >= 8) {  // September to March
+        semester = 10; // Set to Spring
+    }
+
+    if (semester === 10 && currentDate.getMonth() >= 8) { // Fall semester looking ahead to Spring; advance by one year
+        return (currentDate.getFullYear() + 1) * 100 + semester;
+    }
+
+    return currentDate.getFullYear() * 100 + semester;
+}
+
 function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((prevState: CourseDisplayState) => CourseDisplayState) | CourseDisplayState)) => void): Map<string, JSX.Element[]> {
     const { loading, error, data } = useQuery(GET_CLASSES, {
-        variables: { cursor: null }
+        variables: { cursor: null, term: getCurrentTerm() }
     });
 
     const map = new Map<string, JSX.Element[]>();

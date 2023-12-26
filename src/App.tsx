@@ -5,10 +5,12 @@ import Professors from './panels/Professors';
 import Navbar from './components/Navbar';
 import About from "./panels/About";
 import { useState } from "react";
+import Scheduler from './panels/Scheduler';
 
 const PAGES = new Map<string, JSX.Element>();
 PAGES.set("classes", <Classes />);
 PAGES.set("professors", <Professors />);
+PAGES.set("scheduler", <Scheduler />);
 PAGES.set("about", <About />);
 
 let render: (value: (((prevState: string) => string) | string)) => void = () => {};

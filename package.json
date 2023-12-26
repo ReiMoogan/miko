@@ -23,7 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "preinstall": "wget -O moogan_course_scheduler.zip https://github.com/ReiMoogan/moogan_course_scheduler/releases/download/release/moogan_course_scheduler.zip && unzip -f moogan_course_scheduler.zip && npm install --save \"$(pwd)/pkg\"",
+    "preinstall": "wget -O moogan_course_scheduler.zip https://github.com/ReiMoogan/moogan_course_scheduler/releases/download/release/moogan_course_scheduler.zip && unzip -o moogan_course_scheduler.zip && npm install --save \"$(pwd)/pkg\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

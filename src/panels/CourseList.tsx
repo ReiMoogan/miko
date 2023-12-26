@@ -94,7 +94,7 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
     let data;
     if (isCached) {
         const cacheDataStr = localStorage.getItem("cacheData");
-        if (cacheDataStr === "undefined") {
+        if (cacheDataStr === undefined || cacheDataStr === "undefined") {
             isCached = false;
         } else {
             data = JSON.parse(localStorage.getItem("cacheData") || "{}");
@@ -110,9 +110,9 @@ function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((p
     const map = new Map<string, JSX.Element[]>();
 
     if (!isCached) {
+        data = res.data;
         localStorage.setItem("cacheTime", Date.now().toString());
         localStorage.setItem("cacheData", JSON.stringify(data));
-        data = res.data;
     } 
 
     if (loading) {

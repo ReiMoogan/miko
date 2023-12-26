@@ -88,11 +88,32 @@ function getCurrentTerm() {
 }
 
 function DisplayCourses(state: CourseDisplayState, setCurrentState: (value: (((prevState: CourseDisplayState) => CourseDisplayState) | CourseDisplayState)) => void): Map<string, JSX.Element[]> {
-    const { loading, error, data } = useQuery(GET_CLASSES, {
-        variables: { cursor: null, term: getCurrentTerm() }
-    });
+    // apollo cache isn't persisting across page reload
+    const cacheTime = Number.parseInt(localStorage.getItem("cacheTime") || "0");
+    let isCached = cacheTime > 0 && Date.now() < (cacheTime + 3600*1e3);
+    let data;
+    if (isCached) {
+        const cacheDataStr = localStorage.getItem("cacheData");
+        if (cacheDataStr === undefined || cacheDataStr === "undefined") {
+            isCached = false;
+        } else {
+            data = JSON.parse(localStorage.getItem("cacheData") || "{}");
+        }
+    }
 
+    const res = useQuery(GET_CLASSES, {
+        skip: isCached,
+        variables: { cursor: null, term: getCurrentTerm() }
+    }); 
+
+    const { loading, error } = res;
     const map = new Map<string, JSX.Element[]>();
+
+    if (!isCached) {
+        data = res.data;
+        localStorage.setItem("cacheTime", Date.now().toString());
+        localStorage.setItem("cacheData", JSON.stringify(data));
+    } 
 
     if (loading) {
         map.set("loading", [<tr key="load"><td colSpan={100}><Loading /></td></tr>]);

@@ -15,6 +15,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "graphql": "^16.6.0",
+    "moogan_course_scheduler": "file:pkg",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -22,6 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "preinstall": "wget -O moogan_course_scheduler.zip https://github.com/ReiMoogan/moogan_course_scheduler/releases/download/release/moogan_course_scheduler.zip && unzip -o moogan_course_scheduler.zip && npm install --save \"$(pwd)/pkg\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
